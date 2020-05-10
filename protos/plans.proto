@@ -1,0 +1,124 @@
+syntax = "proto3";
+
+package de.zeromberto.giesskanne.v1;
+option go_package = "github.com/zeromberto/giesskanne-apis-go/v1;giesskanne";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/field_mask.proto";
+import "google/api/annotations.proto";
+import "google/type/timeofday.proto";
+import "google/type/dayofweek.proto";
+import "validate/validate.proto";
+
+// Manage plans.
+service Plans {
+    // Get a specific plan.
+    rpc Get (PlanRequest) returns (Plan) {
+        option (google.api.http) = {
+            get: "/v1/plans/{id}"
+        };
+    }
+
+    // List plans with optional filtering.
+    rpc List (PlanListRequest) returns (PlanList) {
+        option (google.api.http) = {
+            get: "/v1/plans"
+        };
+    }
+
+    // Create a new plan or overwrite an existing one.
+    rpc Set (Plan) returns (Plan) {
+        option (google.api.http) = {
+            put: "/v1/plans/{id}"
+            body: "*"
+        };
+    }
+
+    // Delete a specific plan.
+    rpc Delete (PlanRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete : "/v1/plans/{id}"
+        };
+    }
+}
+
+message Plan {
+    // The plan's ID in the tenant's scope.
+    string id = 1
+    // The ID must be lowercase alphanumeric plus hyphens.
+    [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
+
+    // The week plan.
+    WeekPlan week_plan = 2
+    // The week plan must be set.
+    [(validate.rules).message.required = true];
+    
+    // The plan's state.
+    PlanState state = 4
+    // The state must be ENABLED or DISABLED.
+    [(validate.rules).enum = {not_in: [0]}];
+}
+
+message PlanRequest {
+    // The ID of the plan.
+    string id = 1
+    // The ID must be lowercase alphanumeric plus hyphens.
+    [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
+}
+
+message PlanListRequest {
+    // The maximum number of items to return. 0 for default.
+    int32 page_size = 1;
+
+    // The next_page_token value returned from a previous List request, if any.
+    string page_token = 2;
+
+    // Filters to limit the response.
+    PlanFilter filter = 3;
+}
+
+message PlanFilter {
+    // The field mask used to mark fields which shall be respected for the filter.
+    // See: https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/field_mask.proto
+    google.protobuf.FieldMask field_mask = 1;
+
+    // The user ID (OIDC 'sub' claim) of the plan.
+    string user = 2;
+}
+
+message PlanList {
+    // The requested plans.
+    repeated Plan plans = 1;
+
+    // Token to retrieve the next page of results, or empty if there are no more results in the list.
+    string next_page_token = 2;
+}
+
+message WeekPlan {
+    // The plans for each day of the week.
+    map<int32, DayPlan> daily_plans = 1;
+}
+
+message DayPlan {
+    // The periods of the day.
+    repeated Period periods = 1;
+}
+
+message Period {
+    // The start time of the period.
+    google.type.TimeOfDay start = 1;
+
+    // The desired pump flow rate during the period.
+    float flow_rate = 2;
+}
+
+enum PlanState {
+    // The plan state is unspecified.
+    PLAN_STATE_UNSPECIFIED = 0;
+
+    // The plan is enabled.
+    ENABLED = 1;
+
+    // The plan is disabled.
+    DISABLED = 2;
+}

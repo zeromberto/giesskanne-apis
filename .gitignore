@@ -1,0 +1,6 @@
+.directory
+.vscode/
+.idea/
+
+*.png
+*.svg

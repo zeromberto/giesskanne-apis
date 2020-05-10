@@ -1,4 +1,4 @@
-name: CI
+name: ci
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [master]
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -16,3 +16,14 @@ jobs:
 
       - name: Run Buf API Linter and Check for Breaking Changes
         run: make local
+
+  trigger-codegen:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Golang
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: zeromberto/giesskanne-apis-go
+          event-type: codegen
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "repository": "${{ github.repository }}", "actor": "${{ github.actor }}"}'

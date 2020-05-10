@@ -1,0 +1,34 @@
+build:
+  roots:
+    - protos
+    - vendor/api-common-protos
+    - vendor/protoc-gen-validate
+  excludes:
+    - vendor/protoc-gen-validate/vendor
+    - vendor/protoc-gen-validate/tests
+    - vendor/protoc-gen-validate/java
+
+lint:
+  ignore:
+    - google # Proto package name for 'vendor/api-common-protos'.
+    - validate # Proto package name for 'vendor/protoc-gen-validate'.
+  use:
+    - DEFAULT
+    - COMMENTS
+  except:
+    - COMMENT_MESSAGE # The meaning of messages is usually documented by the RPCs that uses them.
+    - COMMENT_ENUM # The meaning of enums is usually documented by the fields that uses them.
+    - PACKAGE_VERSION_SUFFIX # 'types' and 'workflows' are currently unversioned.
+    - PACKAGE_DIRECTORY_MATCH # We don't want io/enpowerx in the path.
+    - SERVICE_SUFFIX # Since our packages are rather coarse, we do not need a suffix to avoid collisions with service names.
+    - ENUM_VALUE_PREFIX # Enum prefixes are important for C++ clients but rather ugly for most other languages.
+    # We intentionally reuse messages across multiple RPCs to achieve REST-like resources with symmetric requests and responses.
+    - RPC_REQUEST_STANDARD_NAME
+    - RPC_RESPONSE_STANDARD_NAME
+    - RPC_REQUEST_RESPONSE_UNIQUE
+
+breaking:
+  use:
+    - WIRE_JSON
+  ignore:
+    - giesskanne/v1beta1

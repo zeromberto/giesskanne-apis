@@ -81,8 +81,8 @@ message PlanFilter {
     // See: https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/field_mask.proto
     google.protobuf.FieldMask field_mask = 1;
 
-    // The user ID (OIDC 'sub' claim) of the plan.
-    string user = 2;
+    // The state of the plan.
+    PlanState state = 2;
 }
 
 message PlanList {

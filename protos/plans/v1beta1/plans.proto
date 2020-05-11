@@ -1,7 +1,7 @@
 syntax = "proto3";
 
-package de.zeromberto.giesskanne.v1beta1;
-option go_package = "github.com/zeromberto/giesskanne-apis-go/v1beta1;giesskanne";
+package de.zeromberto.giesskanne.plans.v1beta1;
+option go_package = "github.com/zeromberto/giesskanne-apis-go/plans/v1beta1;plans";
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/field_mask.proto";
@@ -51,7 +51,7 @@ message Plan {
     WeekPlan week_plan = 2
     // The week plan must be set.
     [(validate.rules).message.required = true];
-    
+
     // The plan's state.
     PlanState state = 4
     // The state must be ENABLED or DISABLED.

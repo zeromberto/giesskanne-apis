@@ -1,7 +1,7 @@
 syntax = "proto3";
 
-package de.zeromberto.giesskanne.v1beta1;
-option go_package = "github.com/zeromberto/giesskanne-apis-go/v1beta1;giesskanne";
+package de.zeromberto.giesskanne.pumps.v1beta1;
+option go_package = "github.com/zeromberto/giesskanne-apis-go/pumps/v1beta1;pumps";
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/field_mask.proto";
@@ -50,7 +50,7 @@ message Pump {
     float flow_rate = 2
     // The flow rate must be positive.
     [(validate.rules).float.gte = 0.0];
-    
+
     // The address of the pump.
     string address = 3
     // The address must be a valid address (IP or Hostname).
@@ -96,7 +96,7 @@ message PumpList {
 }
 
 message PumpStatus {
-    // The mode of the pump. 
+    // The mode of the pump.
     Mode mode = 1
     // The mode must be ENABLED or DISABLED.
     [(validate.rules).enum = {not_in: [0]}];

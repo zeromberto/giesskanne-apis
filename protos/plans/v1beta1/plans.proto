@@ -42,18 +42,23 @@ service Plans {
 }
 
 message Plan {
-    // The plan's ID in the tenant's scope.
+    // The plan's ID.
     string id = 1
     // The ID must be lowercase alphanumeric plus hyphens.
     [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
 
+    // The plan's location.
+    string location = 2
+    // The location must be lowercase alphanumeric plus hyphens.
+    [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
+
     // The week plan.
-    WeekPlan week_plan = 2
+    WeekPlan week_plan = 3
     // The week plan must be set.
     [(validate.rules).message.required = true];
 
     // The plan's state.
-    PlanState state = 4
+    PlanState state = 5
     // The state must be ENABLED or DISABLED.
     [(validate.rules).enum = {not_in: [0]}];
 }

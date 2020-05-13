@@ -46,18 +46,23 @@ message Pump {
     // The ID must be lowercase alphanumeric plus hyphens.
     [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
 
+    // The pump's location.
+    string location = 2
+    // The location must be lowercase alphanumeric plus hyphens.
+    [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
+
     // The flow rate of the pump l/min.
-    float flow_rate = 2
+    float flow_rate = 3
     // The flow rate must be positive.
     [(validate.rules).float.gte = 0.0];
 
     // The address of the pump.
-    string address = 3
+    string address = 4
     // The address must be a valid address (IP or Hostname).
     [(validate.rules).string.address = true];
 
     // The status of this pump.
-    PumpStatus status = 4;
+    PumpStatus status = 5;
 }
 
 message PumpRequest {

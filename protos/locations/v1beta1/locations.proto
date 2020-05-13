@@ -47,8 +47,13 @@ message Location {
     // The ID must be lowercase alphanumeric plus hyphens.
     [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
 
+    // The location's user.
+    string user = 2
+    // The user must be lowercase alphanumeric plus hyphens.
+    [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
+
     // The coordinates of the location.
-    google.type.LatLng coords = 2
+    google.type.LatLng coords = 3
     // The coords must be set.
     [(validate.rules).message.required = true];
 }

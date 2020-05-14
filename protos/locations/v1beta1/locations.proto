@@ -11,81 +11,83 @@ import "validate/validate.proto";
 
 // Manage locations.
 service Locations {
-    // Get a specific location.
-    rpc Get (LocationRequest) returns (Location) {
-        option (google.api.http) = {
+  // Get a specific location.
+  rpc Get (LocationRequest) returns (Location) {
+    option (google.api.http) = {
             get: "/v1/locations/{id}"
         };
-    }
+  }
 
-    // List locations with optional filtering.
-    rpc List (LocationListRequest) returns (LocationList) {
-        option (google.api.http) = {
+  // List locations with optional filtering.
+  rpc List (LocationListRequest) returns (LocationList) {
+    option (google.api.http) = {
             get: "/v1/locations"
         };
-    }
+  }
 
-    // Create a new location or overwrite an existing one.
-    rpc Set (Location) returns (Location) {
-        option (google.api.http) = {
+  // Create a new location or overwrite an existing one.
+  rpc Set (Location) returns (Location) {
+    option (google.api.http) = {
             put: "/v1/locations/{id}"
             body: "*"
         };
-    }
+  }
 
-    // Delete a specific location.
-    rpc Delete (LocationRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
+  // Delete a specific location.
+  rpc Delete (LocationRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
             delete : "/v1/locations/{id}"
         };
-    }
+  }
 }
 
 message Location {
-    // The location's ID in the tenant's scope.
-    string id = 1
-    // The ID must be lowercase alphanumeric plus hyphens.
-    [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
+  // The location's ID in the tenant's scope.
+  string id = 1 // The ID must be lowercase alphanumeric plus hyphens.
+  [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
 
-    // The location's user.
-    string user = 2
-    // The user must be lowercase alphanumeric plus hyphens.
-    [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
+  // The location's user.
+  string user = 2 // The user must be lowercase alphanumeric plus hyphens.
+  [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
 
-    // The coordinates of the location.
-    google.type.LatLng coords = 3
-    // The coords must be set.
-    [(validate.rules).message.required = true];
+  // The coordinates of the location.
+  google.type.LatLng coords = 3 // The coords must be set.
+  [(validate.rules).message.required = true];
 }
 
 message LocationRequest {
-    // The ID of the location.
-    string id = 1
-    // The ID must be lowercase alphanumeric plus hyphens.
-    [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
+  // The ID of the location.
+  string id = 1 // The ID must be lowercase alphanumeric plus hyphens.
+  [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
 }
 
 message LocationListRequest {
-    // The maximum number of items to return. 0 for default.
-    int32 page_size = 1;
+  // The maximum number of items to return. 0 for default.
+  int32 page_size = 1;
 
-    // The next_page_token value returned from a previous List request, if any.
-    string page_token = 2;
+  // The next_page_token value returned from a previous List request, if any.
+  string page_token = 2;
 
-    // Filters to limit the response.
-    LocationFilter filter = 3;
+  // Filters to limit the response.
+  LocationFilter filter = 3;
 }
 
 message LocationFilter {
-    // The field mask used to mark fields which shall be respected for the filter.
-    // See: https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/field_mask.proto
-    google.protobuf.FieldMask field_mask = 1;
+  // The field mask used to mark fields which shall be respected for the filter.
+  // See: https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/field_mask.proto
+  google.protobuf.FieldMask field_mask = 1;
+
+  // The location's user.
+  string user = 2;
+
+  // The coordinates of the location.
+  google.type.LatLng coords = 3;
 }
 
 message LocationList {
-    // The requested locations.
-    repeated Location locations = 1;
+  // The requested locations.
+  repeated Location locations = 1;
 
-    // Token to retrieve the next page of results, or empty if there are no more results in the list.
-    string next_page_token = 2;
+  // Token to retrieve the next page of results, or empty if there are no more results in the list.
+  string next_page_token = 2;
 }

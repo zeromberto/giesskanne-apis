@@ -49,8 +49,8 @@ message Pump {
   string user = 2 // The user must be lowercase alphanumeric plus hyphens.
   [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
 
-  // The pump's location.
-  string location = 3 // The location must be lowercase alphanumeric plus hyphens.
+  // The pump's plan.
+  string plan = 3 // The location must be lowercase alphanumeric plus hyphens.
   [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
 
   // The flow rate of the pump l/min.
@@ -58,11 +58,16 @@ message Pump {
   [(validate.rules).float.gte = 0.0];
 
   // The address of the pump.
-  string address = 5 // The address must be a valid address (IP or Hostname).
-  [(validate.rules).string.address = true];
+  string url = 5 // The address must be a valid address (IP or Hostname).
+  [(validate.rules).string.uri = true];
 
-  // The status of this pump.
-  PumpStatus status = 6;
+  // The mode of the pump.
+  Mode mode = 6 // The mode must be ENABLED or DISABLED.
+  [(validate.rules).enum = {not_in: [0]}];
+
+  // The operating state of the pump.
+  OperatingState operating_state = 7 // The operating state must be specified.
+  [(validate.rules).enum.const = 0];
 }
 
 message PumpRequest {
@@ -99,8 +104,11 @@ message PumpFilter {
   // The address of the pump.
   string address = 5;
 
-  // The status of this pump.
-  PumpStatus status = 6;
+  // The mode of the pump.
+  Mode mode = 6;
+
+  // The operating state of the pump.
+  OperatingState operating_state = 7;
 }
 
 message PumpList {
@@ -109,16 +117,6 @@ message PumpList {
 
   // Token to retrieve the next page of results, or empty if there are no more results in the list.
   string next_page_token = 2;
-}
-
-message PumpStatus {
-  // The mode of the pump.
-  Mode mode = 1 // The mode must be ENABLED or DISABLED.
-  [(validate.rules).enum = {not_in: [0]}];
-
-  // The operating state of the pump.
-  OperatingState operating_state = 2 // The operating state must be specified.
-  [(validate.rules).enum = {not_in: [0]}];
 }
 
 enum Mode {

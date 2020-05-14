@@ -33,6 +33,14 @@ service Locations {
         };
   }
 
+  // Update an existing location.
+  rpc Update (UpdateLocationRequest) returns (Location) {
+    option (google.api.http) = {
+            patch: "/v1/locations/{location.id}"
+            body: "location"
+        };
+  }
+
   // Delete a specific location.
   rpc Delete (LocationRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
@@ -59,6 +67,14 @@ message LocationRequest {
   // The ID of the location.
   string id = 1 // The ID must be lowercase alphanumeric plus hyphens.
   [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
+}
+
+message UpdateLocationRequest {
+  // The pump to be patched.
+  Location location = 1 [(validate.rules).message = {required: true, skip: true}];
+
+  // The field mask used to mark contract fields which shall be respected for the filter.
+  google.protobuf.FieldMask update_mask = 2 [(validate.rules).message = {required: true, skip: true}];
 }
 
 message LocationListRequest {

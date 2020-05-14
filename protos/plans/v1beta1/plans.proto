@@ -34,6 +34,14 @@ service Plans {
         };
   }
 
+  // Update an existing plan.
+  rpc Update (UpdatePlanRequest) returns (Plan) {
+    option (google.api.http) = {
+            patch: "/v1/plans/{plan.id}"
+            body: "plan"
+        };
+  }
+
   // Delete a specific plan.
   rpc Delete (PlanRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
@@ -68,6 +76,14 @@ message PlanRequest {
   // The ID of the plan.
   string id = 1 // The ID must be lowercase alphanumeric plus hyphens.
   [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
+}
+
+message UpdatePlanRequest {
+  // The pump to be patched.
+  Plan plan = 1 [(validate.rules).message = {required: true, skip: true}];
+
+  // The field mask used to mark contract fields which shall be respected for the filter.
+  google.protobuf.FieldMask update_mask = 2 [(validate.rules).message = {required: true, skip: true}];
 }
 
 message PlanListRequest {

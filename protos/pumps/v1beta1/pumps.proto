@@ -32,6 +32,14 @@ service Pumps {
         };
   }
 
+  // Update an existing pump.
+  rpc Update (UpdatePumpRequest) returns (Pump) {
+    option (google.api.http) = {
+            patch: "/v1/pumps/{pump.id}"
+            body: "pump"
+        };
+  }
+
   // Delete a specific pump.
   rpc Delete (PumpRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
@@ -72,8 +80,15 @@ message Pump {
 
 message PumpRequest {
   // The ID of the pump.
-  string id = 1 // The ID must be lowercase alphanumeric plus hyphens.
-  [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
+  string id = 1 [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
+}
+
+message UpdatePumpRequest {
+  // The pump to be patched.
+  Pump pump = 1 [(validate.rules).message = {required: true, skip: true}];
+
+  // The field mask used to mark contract fields which shall be respected for the filter.
+  google.protobuf.FieldMask update_mask = 2 [(validate.rules).message = {required: true, skip: true}];
 }
 
 message PumpListRequest {

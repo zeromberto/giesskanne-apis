@@ -1,7 +1,7 @@
 syntax = "proto3";
 
-package de.zeromberto.giesskanne.plans.v1beta1;
-option go_package = "github.com/zeromberto/giesskanne-apis-go/plans/v1beta1;plans";
+package de.zeromberto.giesskanne.resources.v1beta1;
+option go_package = "github.com/zeromberto/giesskanne-apis-go/resources/v1beta1;resources";
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/field_mask.proto";
@@ -9,6 +9,7 @@ import "google/api/annotations.proto";
 import "google/type/timeofday.proto";
 import "google/type/dayofweek.proto";
 import "validate/validate.proto";
+import "types/resource_mode.proto";
 
 // Manage plans.
 service Plans {
@@ -68,7 +69,7 @@ message Plan {
   [(validate.rules).message.required = true];
 
   // The plan's state.
-  PlanState state = 5 // The state must be ENABLED or DISABLED.
+  de.zeromberto.giesskanne.types.ResourceMode mode = 5 // The state must be ENABLED or DISABLED.
   [(validate.rules).enum = {not_in: [0]}];
 }
 
@@ -108,8 +109,8 @@ message PlanFilter {
   // The location to filter.
   string location = 3;
 
-  // The plan's state.
-  PlanState state = 4;
+  // The plan's mode.
+  de.zeromberto.giesskanne.types.ResourceMode mode = 4;
 }
 
 message PlanList {
@@ -143,15 +144,4 @@ message Period {
   // The desired pump flow rate during the period.
   float flow_rate = 2
   [(validate.rules).float.gte = 0.0];
-}
-
-enum PlanState {
-  // The plan state is unspecified.
-  PLAN_STATE_UNSPECIFIED = 0;
-
-  // The plan is enabled.
-  ENABLED = 1;
-
-  // The plan is disabled.
-  DISABLED = 2;
 }

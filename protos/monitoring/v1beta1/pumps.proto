@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package de.zeromberto.giesskanne.monitoring.v1beta1;
+option go_package = "github.com/zeromberto/giesskanne-apis-go/monitoring/v1beta1;monitoring";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/field_mask.proto";
+import "google/api/annotations.proto";
+import "google/type/latlng.proto";
+import "validate/validate.proto";
+import "types/pump_operating_state.proto";
+
+// Manage locations.
+service Pumps {
+  // CreatePumpStatusSubscription
+  rpc CreatePumpStatusSubscription (CreatePumpStatusSubscriptionRequest) returns (PumpStatusSubscription);
+
+  // StreamPumpStatus
+  rpc StreamPumpStatus (StreamPumpStatusRequest) returns (stream PumpStatus);
+
+  //  rpc BatchGetPumpStatus (BatchGetPumpStatusRequest) returns (BatchGetPumpStatusResponse);
+}
+
+message CreatePumpStatusSubscriptionRequest {
+  // The subscription
+  PumpStatusSubscription subscription = 1;
+}
+
+message StreamPumpStatusRequest {
+  // The subscription.
+  string subscription = 1;
+
+  // The timestamp to begin streaming
+  google.protobuf.Timestamp from = 2;
+}
+
+message PumpStatusSubscription {
+  // The unique ID of the RecordsSubscription
+  string id = 1;
+
+  // The SubjectType the RecordsSubscription is referring to
+  string pump = 2;
+
+  // The time when the RecordsSubscription expires
+  google.protobuf.Timestamp expiry = 3;
+}
+
+
+message PumpStatus {
+  // The ID of the pump.
+  string id = 1;
+
+  // The timestamp the status was recorded
+  google.protobuf.Timestamp timestamp = 2;
+
+  // The operating status of the pump.
+  de.zeromberto.giesskanne.types.PumpOperatingState operating_state = 3;
+
+  // The power consumption of the pump.
+  float power_consumption = 4;
+
+  // The temperature of the pump.
+  float temperature = 5;
+}
+//
+//message BatchGetPumpStatusRequest {
+//  // The ID of the pump.
+//  string id = 1;
+//
+//  // The timestamp the status was recorded
+//  google.protobuf.Timestamp from = 2;
+//
+//  // To
+//  google.protobuf.Timestamp to = 3;
+//}
+//
+//message BatchGetPumpStatusResponse {
+//  // The status
+//  repeated PumpStatus status = 1;
+//}

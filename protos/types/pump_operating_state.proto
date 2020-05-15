@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package de.zeromberto.giesskanne.types;
+option go_package = "github.com/zeromberto/giesskanne-apis-go/types;types";
+
+enum PumpOperatingState {
+  // The operating state is unspecified.
+  OPERATING_STATE_UNSPECIFIED = 0;
+
+  // The pump is active.
+  ACTIVE = 1;
+
+  // The pump is inactive.
+  INACTIVE = 2;
+
+  // The pump indicates an error.
+  ERROR = 3;
+}

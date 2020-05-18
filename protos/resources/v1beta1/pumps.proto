@@ -67,21 +67,24 @@ message Pump {
   // The flow rate of the pump l/min.
   float flow_rate = 5 [(validate.rules).float.gte = 0.0];
 
+  // The dead time before water flows in s.
+  float dead_time = 6 [(validate.rules).float.gte = 0.0];
+
   // The address of the pump.
-  string url = 6 [(validate.rules).string.uri = true];
+  string url = 7 [(validate.rules).string.uri = true];
 
   // The mode of the pump.
-  de.zeromberto.giesskanne.types.ResourceMode mode = 7 [(validate.rules).enum = {not_in: [0]}];
+  de.zeromberto.giesskanne.types.ResourceMode mode = 8 [(validate.rules).enum = {not_in: [0]}];
 
   // The operating state of the pump.
-  de.zeromberto.giesskanne.types.PumpOperatingState operating_state = 8 [(validate.rules).enum.const = 0];
+  de.zeromberto.giesskanne.types.PumpOperatingState operating_state = 9 [(validate.rules).enum.const = 0];
 
   // Represents a time zone from the
   // [IANA Time Zone Database](https://www.iana.org/time-zones).
-  string time_zone = 9 [(validate.rules).string.pattern = "^[A-Za-z/]+$"];
+  string time_zone = 10 [(validate.rules).string.pattern = "^[A-Za-z/]+$"];
 
   // The coordinates of the pump.
-  google.type.LatLng coords = 10 [(validate.rules).message.required = true];
+  google.type.LatLng coords = 11 [(validate.rules).message.required = true];
 }
 
 message PumpRequest {

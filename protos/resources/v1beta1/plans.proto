@@ -60,13 +60,9 @@ message Plan {
   string user = 2 // The user must be lowercase alphanumeric plus hyphens.
   [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
 
-  // The week plan.
-  WeekPlan week_plan = 3 // The week plan must be set.
-  [(validate.rules).message.required = true];
-
-  // The plan's state.
-  de.zeromberto.giesskanne.types.ResourceMode mode = 4 // The state must be ENABLED or DISABLED.
-  [(validate.rules).enum = {not_in: [0]}];
+  // The plans for each day of the week.
+  repeated DayPlan day_plans = 3
+  [(validate.rules).repeated.min_items = 1];
 }
 
 message PlanRequest {
@@ -104,9 +100,6 @@ message PlanFilter {
 
   // The location to filter.
   string location = 3;
-
-  // The plan's mode.
-  de.zeromberto.giesskanne.types.ResourceMode mode = 4;
 }
 
 message PlanList {
@@ -115,12 +108,6 @@ message PlanList {
 
   // Token to retrieve the next page of results, or empty if there are no more results in the list.
   string next_page_token = 2;
-}
-
-message WeekPlan {
-  // The plans for each day of the week.
-  repeated DayPlan daily_plans = 1
-  [(validate.rules).repeated.min_items = 1];
 }
 
 message DayPlan {
@@ -137,7 +124,7 @@ message Period {
   google.type.TimeOfDay start = 1
   [(validate.rules).message.required = true];
 
-  // The desired pump flow rate during the period.
-  float flow_rate = 2
+  // The desired volume per day in l/24h.
+  float volume_per_day = 2
   [(validate.rules).float.gte = 0.0];
 }

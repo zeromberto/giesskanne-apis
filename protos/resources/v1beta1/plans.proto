@@ -9,7 +9,6 @@ import "google/api/annotations.proto";
 import "google/type/timeofday.proto";
 import "google/type/dayofweek.proto";
 import "validate/validate.proto";
-import "types/resource_mode.proto";
 
 // Manage plans.
 service Plans {
@@ -55,11 +54,14 @@ message Plan {
   // The plan's ID.
   string id = 1 [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
 
+  // The name of the plan.
+  string name = 2 [(validate.rules).string.pattern = "[A-Za-z-]+"];
+
   // The plan's user.
-  string user = 2 [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
+  string user = 3 [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
 
   // The plans for each day of the week.
-  repeated DayPlan day_plans = 3 [(validate.rules).repeated.min_items = 1];
+  repeated DayPlan day_plans = 4 [(validate.rules).repeated.min_items = 1];
 }
 
 message PlanRequest {
@@ -91,11 +93,14 @@ message PlanFilter {
   // See: https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/field_mask.proto
   google.protobuf.FieldMask field_mask = 1;
 
+  // The name of the plan.
+  string name = 2;
+
   // The user to filter.
-  string user = 2;
+  string user = 3;
 
   // The location to filter.
-  string location = 3;
+  string location = 4;
 }
 
 message PlanList {
@@ -119,5 +124,5 @@ message Period {
   google.type.TimeOfDay start = 1 [(validate.rules).message.required = true];
 
   // The desired volume per hour in l/h.
-  float volume_per_hour = 2 [(validate.rules).float.gte = 0.0];
+  double volume_per_hour = 2 [(validate.rules).double.gte = 0.0];
 }

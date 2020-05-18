@@ -9,7 +9,7 @@ import "google/protobuf/field_mask.proto";
 import "google/api/annotations.proto";
 import "google/type/latlng.proto";
 import "validate/validate.proto";
-import "types/pump_operating_state.proto";
+import "resources/v1beta1/pumps.proto";
 
 // Manage locations.
 service Pumps {
@@ -55,7 +55,7 @@ message PumpStatus {
   google.protobuf.Timestamp timestamp = 2;
 
   // The operating status of the pump.
-  de.zeromberto.giesskanne.types.PumpOperatingState operating_state = 3;
+  de.zeromberto.giesskanne.resources.v1beta1.OperatingState operating_state = 3;
 
   // The power consumption of the pump.
   float power_consumption = 4;

@@ -60,16 +60,12 @@ message Plan {
   string user = 2 // The user must be lowercase alphanumeric plus hyphens.
   [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
 
-  // The plan's location.
-  string location = 3 // The location must be lowercase alphanumeric plus hyphens.
-  [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
-
   // The week plan.
-  WeekPlan week_plan = 4 // The week plan must be set.
+  WeekPlan week_plan = 3 // The week plan must be set.
   [(validate.rules).message.required = true];
 
   // The plan's state.
-  de.zeromberto.giesskanne.types.ResourceMode mode = 5 // The state must be ENABLED or DISABLED.
+  de.zeromberto.giesskanne.types.ResourceMode mode = 4 // The state must be ENABLED or DISABLED.
   [(validate.rules).enum = {not_in: [0]}];
 }
 

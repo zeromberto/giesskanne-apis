@@ -1,7 +1,7 @@
 syntax = "proto3";
 
-package de.zeromberto.giesskanne.resources.v1beta1;
-option go_package = "github.com/zeromberto/giesskanne-apis-go/resources/v1beta1;resources";
+package de.zeromberto.giesskanne.plans.v1beta1;
+option go_package = "github.com/zeromberto/giesskanne-apis-go/plans/v1beta1;plans";
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/field_mask.proto";

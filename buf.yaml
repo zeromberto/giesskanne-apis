@@ -31,5 +31,6 @@ breaking:
   use:
     - WIRE_JSON
   ignore:
-    - resources/v1beta1
-    - monitoring/v1beta1
+    - locations/v1beta1
+    - plans/v1beta1
+    - pumps/v1beta1

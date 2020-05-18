@@ -1,13 +1,14 @@
 syntax = "proto3";
 
-package de.zeromberto.giesskanne.resources.v1beta1;
-option go_package = "github.com/zeromberto/giesskanne-apis-go/resources/v1beta1;resources";
+package de.zeromberto.giesskanne.pumps.v1beta1;
+option go_package = "github.com/zeromberto/giesskanne-apis-go/pumps/v1beta1;pumps";
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/field_mask.proto";
 import "google/api/annotations.proto";
 import "google/type/latlng.proto";
 import "validate/validate.proto";
+import "pumps/v1beta1/types.proto";
 
 // Manage pumps.
 service Pumps {
@@ -145,29 +146,4 @@ message PumpList {
 
   // Token to retrieve the next page of results, or empty if there are no more results in the list.
   string next_page_token = 2;
-}
-
-enum Mode {
-  // The resource mode is unspecified.
-  MODE_UNSPECIFIED = 0;
-
-  // The resource is enabled.
-  ENABLED = 1;
-
-  // The resource is disabled.
-  DISABLED = 2;
-}
-
-enum OperatingState {
-  // The operating state is unspecified.
-  OPERATING_STATE_UNSPECIFIED = 0;
-
-  // The pump is active.
-  ACTIVE = 1;
-
-  // The pump is inactive.
-  INACTIVE = 2;
-
-  // The pump indicates an error.
-  ERROR = 3;
 }

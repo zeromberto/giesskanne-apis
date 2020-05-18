@@ -1,18 +1,13 @@
 syntax = "proto3";
 
-package de.zeromberto.giesskanne.monitoring.v1beta1;
-option go_package = "github.com/zeromberto/giesskanne-apis-go/monitoring/v1beta1;monitoring";
+package de.zeromberto.giesskanne.pumps.v1beta1;
+option go_package = "github.com/zeromberto/giesskanne-apis-go/pumps/v1beta1;pumps";
 
-import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
-import "google/protobuf/field_mask.proto";
-import "google/api/annotations.proto";
-import "google/type/latlng.proto";
-import "validate/validate.proto";
-import "resources/v1beta1/pumps.proto";
+import "pumps/v1beta1/types.proto";
 
 // Manage locations.
-service Pumps {
+service Monitoring {
   // CreatePumpStatusSubscription
   rpc CreatePumpStatusSubscription (CreatePumpStatusSubscriptionRequest) returns (PumpStatusSubscription);
 
@@ -55,7 +50,7 @@ message PumpStatus {
   google.protobuf.Timestamp timestamp = 2;
 
   // The operating status of the pump.
-  de.zeromberto.giesskanne.resources.v1beta1.OperatingState operating_state = 3;
+  OperatingState operating_state = 3;
 
   // The power consumption of the pump.
   float power_consumption = 4;
@@ -63,7 +58,7 @@ message PumpStatus {
   // The temperature of the pump.
   float temperature = 5;
 }
-//
+
 //message BatchGetPumpStatusRequest {
 //  // The ID of the pump.
 //  string id = 1;

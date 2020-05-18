@@ -55,11 +55,11 @@ message Location {
   [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
 
   // The name of the location.
-  string name = 2 [(validate.rules).string.pattern = "[A-Za-z-]+"];
+  string name = 2 [(validate.rules).string.pattern = "[A-Za-z]+"];
 
   // The location's user.
   string user = 3 // The user must be lowercase alphanumeric plus hyphens.
-  [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
+  [(validate.rules).string.pattern = "^[0-9a-z-|_]+$"];
 
   // The coordinates of the location.
   google.type.LatLng coords = 4 // The coords must be set.

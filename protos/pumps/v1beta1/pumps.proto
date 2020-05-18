@@ -55,10 +55,10 @@ message Pump {
   string id = 1 [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
 
   // The name of the pump.
-  string name = 2 [(validate.rules).string.pattern = "[A-Za-z-]+"];
+  string name = 2 [(validate.rules).string.pattern = "[A-Za-z]+"];
 
   // The pump's user.
-  string user = 3 [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
+  string user = 3 [(validate.rules).string.pattern = "^[0-9a-z-|_]+$"];
 
   // The pump's location.
   string location = 4 [(validate.rules).string.pattern = "^[0-9a-z-]+$"];

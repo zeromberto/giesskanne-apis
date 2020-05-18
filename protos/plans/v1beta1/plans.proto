@@ -55,10 +55,10 @@ message Plan {
   string id = 1 [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
 
   // The name of the plan.
-  string name = 2 [(validate.rules).string.pattern = "[A-Za-z-]+"];
+  string name = 2 [(validate.rules).string.pattern = "[A-Za-z]+"];
 
   // The plan's user.
-  string user = 3 [(validate.rules).string.pattern = "^[0-9a-z-]+$"];
+  string user = 3 [(validate.rules).string.pattern = "^[0-9a-z-|_]+$"];
 
   // The plans for each day of the week.
   repeated DayPlan day_plans = 4 [(validate.rules).repeated.min_items = 1];

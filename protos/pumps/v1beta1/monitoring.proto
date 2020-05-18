@@ -53,10 +53,10 @@ message PumpStatus {
   OperatingState operating_state = 3;
 
   // The power consumption of the pump.
-  float power_consumption = 4;
+  double power_consumption = 4;
 
   // The temperature of the pump.
-  float temperature = 5;
+  double temperature = 5;
 }
 
 //message BatchGetPumpStatusRequest {

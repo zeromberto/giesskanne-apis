@@ -8,7 +8,6 @@ import "google/protobuf/field_mask.proto";
 import "google/api/annotations.proto";
 import "google/type/latlng.proto";
 import "validate/validate.proto";
-import "pumps/v1beta1/types.proto";
 
 // Manage pumps.
 service Pumps {
@@ -77,16 +76,6 @@ message Pump {
 
   // The mode of the pump.
   Mode mode = 9 [(validate.rules).enum = {not_in: [0]}];
-
-  // The operating state of the pump.
-  OperatingState operating_state = 10 [(validate.rules).enum.const = 0];
-
-  // Represents a time zone from the
-  // [IANA Time Zone Database](https://www.iana.org/time-zones).
-  string time_zone = 11 [(validate.rules).string.pattern = "^[A-Za-z/]+$"];
-
-  // The coordinates of the pump.
-  google.type.LatLng coords = 12 [(validate.rules).message.required = true];
 }
 
 message PumpRequest {
@@ -135,9 +124,6 @@ message PumpFilter {
 
   // The mode of the pump.
   Mode mode = 7;
-
-  // The operating state of the pump.
-  OperatingState operating_state = 8;
 }
 
 message PumpList {
@@ -146,4 +132,15 @@ message PumpList {
 
   // Token to retrieve the next page of results, or empty if there are no more results in the list.
   string next_page_token = 2;
+}
+
+enum Mode {
+  // The resource mode is unspecified.
+  MODE_UNSPECIFIED = 0;
+
+  // The resource is enabled.
+  ENABLED = 1;
+
+  // The resource is disabled.
+  DISABLED = 2;
 }

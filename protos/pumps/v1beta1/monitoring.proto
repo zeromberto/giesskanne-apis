@@ -4,7 +4,6 @@ package de.zeromberto.giesskanne.pumps.v1beta1;
 option go_package = "github.com/zeromberto/giesskanne-apis-go/pumps/v1beta1;pumps";
 
 import "google/protobuf/timestamp.proto";
-import "pumps/v1beta1/types.proto";
 
 // Manage locations.
 service Monitoring {
@@ -43,6 +42,20 @@ message PumpStatusSubscription {
 
 
 message PumpStatus {
+  enum OperatingState {
+    // The operating state is unspecified.
+    OPERATING_STATE_UNSPECIFIED = 0;
+
+    // The pump is active.
+    ACTIVE = 1;
+
+    // The pump is inactive.
+    INACTIVE = 2;
+
+    // The pump indicates an error.
+    ERROR = 3;
+  }
+
   // The ID of the pump.
   string id = 1;
 

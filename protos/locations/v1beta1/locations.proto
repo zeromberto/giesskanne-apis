@@ -62,8 +62,11 @@ message Location {
   [(validate.rules).string.pattern = "^[0-9a-z-|_]+$"];
 
   // The coordinates of the location.
-  google.type.LatLng coords = 4 // The coords must be set.
-  [(validate.rules).message.required = true];
+  google.type.LatLng coords = 4 [(validate.rules).message.required = true];
+
+  // Represents a time zone from the
+  // [IANA Time Zone Database](https://www.iana.org/time-zones).
+  string time_zone = 5 [(validate.rules).string.pattern = "^[A-Za-z/]+$"];
 }
 
 message LocationRequest {
